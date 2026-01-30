@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yield Orbit - 数据统计、游戏与社区</title>
+    <title>Yield Orbit - 数据统计与养成游戏</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -48,9 +48,17 @@
             gap: 12px;
         }
         
-        .logo-icon {
-            color: #3b82f6;
-            font-size: 28px;
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
         }
         
         .logo-text {
@@ -82,24 +90,10 @@
         
         /* 主标题区域 */
         .hero {
-            padding: 120px 0;
+            padding: 100px 0;
             text-align: center;
             background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.15), transparent 50%),
                         radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.15), transparent 50%);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(59,130,246,0.05)"/></svg>');
-            background-size: cover;
-            z-index: -1;
         }
         
         .hero h1 {
@@ -144,7 +138,7 @@
             border-radius: 2px;
         }
         
-        /* 产品展示区域 */
+        /* 产品卡片 */
         .products {
             display: flex;
             flex-wrap: wrap;
@@ -172,6 +166,10 @@
             font-size: 48px;
             margin-bottom: 25px;
             color: #3b82f6;
+        }
+        
+        .forum-icon {
+            color: #10b981;
         }
         
         .product-card h3 {
@@ -227,45 +225,9 @@
             margin-right: 10px;
         }
         
-        /* 论坛展示区域 */
-        .forums {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 40px;
-        }
-        
-        .forum-card {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 16px;
-            padding: 40px 30px;
-            width: 100%;
-            max-width: 500px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid #334155;
-        }
-        
-        .forum-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(16, 185, 129, 0.2);
-        }
-        
-        .forum-icon {
-            font-size: 48px;
-            margin-bottom: 25px;
-            color: #10b981;
-        }
-        
-        .forum-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-        
-        .forum-card p {
-            color: #cbd5e1;
-            margin-bottom: 25px;
+        /* 论坛社区区域 */
+        .community-section {
+            margin-top: 60px;
         }
         
         /* 链接设置区域 */
@@ -402,7 +364,7 @@
             nav ul {
                 flex-wrap: wrap;
                 justify-content: center;
-                gap: 15px;
+                gap: 20px;
             }
             
             .hero h1 {
@@ -417,7 +379,7 @@
                 font-size: 2rem;
             }
             
-            .product-card, .forum-card {
+            .product-card {
                 padding: 30px 20px;
             }
             
@@ -432,15 +394,15 @@
     <header>
         <div class="container nav-container">
             <div class="logo">
-                <i class="fas fa-satellite logo-icon"></i>
+                <div class="logo-img">YO</div>
                 <span class="logo-text">Yield Orbit</span>
             </div>
             <nav>
                 <ul>
                     <li><a href="#home">首页</a></li>
                     <li><a href="#products">产品</a></li>
-                    <li><a href="#forums">社区论坛</a></li>
-                    <li><a href="#links">链接设置</a></li>
+                    <li><a href="#community">社区</a></li>
+                    <li><a href="https://yield-orbit.github.io/Yo-Forum/" target="_blank">进入论坛</a></li>
                     <li><a href="#contact">联系我们</a></li>
                 </ul>
             </nav>
@@ -451,7 +413,7 @@
     <section class="hero" id="home">
         <div class="container">
             <h1>探索数据宇宙，<span class="highlight">成就游戏人生</span></h1>
-            <p>Yield Orbit 为您提供专业的统计类小程序、沉浸式养成游戏体验和活跃的社区论坛，将数据分析、娱乐与交流完美结合。</p>
+            <p>Yield Orbit 为您提供专业的统计类小程序和沉浸式养成游戏体验，以及活跃的社区论坛，将数据分析、娱乐与交流完美结合。</p>
         </div>
     </section>
 
@@ -492,47 +454,46 @@
         </div>
     </section>
 
-    <!-- 论坛展示区域 -->
-    <section id="forums">
+    <!-- 社区论坛区域 -->
+    <section id="community" class="community-section">
         <div class="container">
             <h2 class="section-title">社区论坛</h2>
-            <p style="text-align: center; color: #94a3b8; max-width: 800px; margin: 0 auto 40px;">加入我们的社区论坛，与其他用户交流使用心得，分享游戏攻略，获取最新产品动态。</p>
             
-            <div class="forums">
-                <!-- 小程序论坛卡片 -->
-                <div class="forum-card">
-                    <i class="fas fa-comments forum-icon"></i>
-                    <h3>小程序技术论坛</h3>
-                    <p>专门为统计小程序用户设立的交流社区。在这里您可以：</p>
+            <div class="products">
+                <!-- 论坛社区卡片 -->
+                <div class="product-card">
+                    <i class="fas fa-comments product-icon forum-icon"></i>
+                    <h3>Yield Orbit 社区论坛</h3>
+                    <p>加入我们的官方论坛，与其他用户交流使用心得，分享游戏攻略，获取技术支持。</p>
+                    <p><strong>论坛特点：</strong></p>
                     <ul style="list-style-position: inside; margin-bottom: 20px; color: #cbd5e1;">
-                        <li>分享数据分析技巧和经验</li>
-                        <li>获取技术支持和问题解答</li>
-                        <li>提出功能建议和反馈</li>
-                        <li>学习高级数据分析方法</li>
+                        <li>用户注册登录系统</li>
+                        <li>敏感词过滤机制</li>
+                        <li>小程序和游戏分版块讨论</li>
+                        <li>开发者管理功能</li>
+                        <li>用户协议保护</li>
                     </ul>
                     
                     <div class="product-links">
-                        <a href="#" class="product-link forum-link" id="appForumLink">
-                            <i class="fas fa-users"></i> 进入小程序论坛
+                        <a href="https://yield-orbit.github.io/Yo-Forum/" target="_blank" class="product-link forum-link">
+                            <i class="fas fa-external-link-alt"></i> 进入社区论坛
                         </a>
                     </div>
                 </div>
                 
-                <!-- 游戏论坛卡片 -->
-                <div class="forum-card">
-                    <i class="fas fa-gamepad forum-icon"></i>
-                    <h3>游戏玩家社区</h3>
-                    <p>专为游戏爱好者打造的交流平台。在这里您可以：</p>
-                    <ul style="list-style-position: inside; margin-bottom: 20px; color: #cbd5e1;">
-                        <li>分享游戏攻略和心得</li>
-                        <li>组队寻找游戏伙伴</li>
-                        <li>参与游戏活动讨论</li>
-                        <li>获取最新游戏资讯</li>
-                    </ul>
+                <!-- 论坛特色卡片 -->
+                <div class="product-card">
+                    <i class="fas fa-users product-icon" style="color: #8b5cf6;"></i>
+                    <h3>社区特色功能</h3>
+                    <p><strong>用户友好：</strong> 简洁的注册流程，完善的用户协议保护</p>
+                    <p><strong>安全交流：</strong> 敏感词自动过滤，维护健康社区环境</p>
+                    <p><strong>双论坛系统：</strong> 小程序技术论坛和游戏玩家社区分开</p>
+                    <p><strong>开发者管理：</strong> 用户"yao"拥有开发者特权，可管理用户</p>
+                    <p><strong>实时互动：</strong> 点赞、回复、消息发布功能</p>
                     
                     <div class="product-links">
-                        <a href="#" class="product-link forum-link" id="gameForumLink">
-                            <i class="fas fa-dice"></i> 进入游戏论坛
+                        <a href="https://yield-orbit.github.io/Yo-Forum/" target="_blank" class="product-link" style="background: linear-gradient(to right, #8b5cf6, #7c3aed);">
+                            <i class="fas fa-comments"></i> 立即加入讨论
                         </a>
                     </div>
                 </div>
@@ -545,8 +506,8 @@
         <div class="container">
             <h2 class="section-title">链接设置</h2>
             <div class="link-configuration">
-                <h3>所有链接配置</h3>
-                <p style="text-align: center; color: #94a3b8; margin-bottom: 20px;">以下是所有产品的链接设置区域，请将您的实际链接填入对应的位置</p>
+                <h3>产品链接配置</h3>
+                <p style="text-align: center; color: #94a3b8; margin-bottom: 20px;">以下是产品链接设置区域，请将您的实际链接填入对应的位置</p>
                 
                 <div class="link-config-grid">
                     <div class="link-config-item app-config">
@@ -572,18 +533,15 @@
                     </div>
                     
                     <div class="link-config-item forum-config">
-                        <h4>论坛链接</h4>
-                        <p>要设置论坛的链接，请找到以下两个id的a标签，在href属性中填入对应的论坛链接地址。</p>
+                        <h4>论坛链接（已设置）</h4>
+                        <p>论坛链接已设置为：<code>https://yield-orbit.github.io/Yo-Forum/</code></p>
+                        <p>如需修改，请找到以下代码部分：</p>
                         <div class="link-placeholder">
-                            <p><strong>小程序论坛：</strong></p>
-                            <p>&lt;a href="#" class="product-link forum-link" id="appForumLink"&gt;</p>
-                            <p><strong>替换为：</strong></p>
-                            <p>&lt;a href="https://your-app-forum.com" class="product-link forum-link" id="appForumLink"&gt;</p>
+                            <p><strong>导航栏链接：</strong></p>
+                            <p>&lt;a href="https://yield-orbit.github.io/Yo-Forum/" target="_blank"&gt;进入论坛&lt;/a&gt;</p>
                             
-                            <p style="margin-top: 15px;"><strong>游戏论坛：</strong></p>
-                            <p>&lt;a href="#" class="product-link forum-link" id="gameForumLink"&gt;</p>
-                            <p><strong>替换为：</strong></p>
-                            <p>&lt;a href="https://your-game-forum.com" class="product-link forum-link" id="gameForumLink"&gt;</p>
+                            <p><strong>社区区域链接：</strong></p>
+                            <p>&lt;a href="https://yield-orbit.github.io/Yo-Forum/" target="_blank" class="product-link forum-link"&gt;</p>
                         </div>
                     </div>
                 </div>
@@ -598,11 +556,11 @@
             <div class="features">
                 <div class="feature">
                     <h3><i class="fas fa-bolt"></i> 极速性能</h3>
-                    <p>我们的产品经过深度优化，提供流畅的用户体验，无论是数据处理还是游戏运行都快速响应。</p>
+                    <p>我们的产品经过深度优化，提供流畅的用户体验，无论是数据处理、游戏运行还是论坛交流都快速响应。</p>
                 </div>
                 <div class="feature">
                     <h3><i class="fas fa-shield-alt"></i> 安全可靠</h3>
-                    <p>采用最新的安全技术，确保用户数据安全和隐私保护，让您安心使用我们的服务。</p>
+                    <p>采用最新的安全技术，确保用户数据安全和隐私保护，让您安心使用我们的服务和参与社区讨论。</p>
                 </div>
                 <div class="feature">
                     <h3><i class="fas fa-sync-alt"></i> 持续更新</h3>
@@ -610,7 +568,7 @@
                 </div>
                 <div class="feature">
                     <h3><i class="fas fa-users"></i> 活跃社区</h3>
-                    <p>加入我们分开的论坛社区，与志同道合的用户交流，分享技巧，共同成长。</p>
+                    <p>加入我们活跃的用户社区，分享技巧、交流经验，共同探索数据与游戏的无限可能。</p>
                 </div>
             </div>
         </div>
@@ -625,12 +583,21 @@
                     <p>我们是一家专注于数据统计工具、娱乐游戏开发和社区建设的公司，致力于提供全方位的数字体验。</p>
                 </div>
                 <div class="footer-section">
-                    <h3>产品与社区</h3>
+                    <h3>产品与服务</h3>
                     <ul style="list-style: none;">
                         <li>统计类小程序</li>
                         <li>养成类游戏</li>
-                        <li>小程序技术论坛</li>
-                        <li>游戏玩家社区</li>
+                        <li>社区论坛</li>
+                        <li>技术支持</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="#home" style="color: #94a3b8; text-decoration: none;">首页</a></li>
+                        <li><a href="#products" style="color: #94a3b8; text-decoration: none;">产品</a></li>
+                        <li><a href="#community" style="color: #94a3b8; text-decoration: none;">社区</a></li>
+                        <li><a href="https://yield-orbit.github.io/Yo-Forum/" target="_blank" style="color: #94a3b8; text-decoration: none;">进入论坛</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -642,36 +609,44 @@
             </div>
             <div class="copyright">
                 <p>&copy; 2023 Yield Orbit. 保留所有权利。</p>
+                <p style="margin-top: 10px; font-size: 0.9rem;">
+                    <a href="#home" style="color: #60a5fa; text-decoration: none;">官网首页</a> | 
+                    <a href="https://yield-orbit.github.io/Yo-Forum/" target="_blank" style="color: #60a5fa; text-decoration: none;">社区论坛</a> | 
+                    <a href="#contact" style="color: #60a5fa; text-decoration: none;">联系我们</a>
+                </p>
             </div>
         </div>
     </footer>
 
     <script>
-        // 简单交互效果
+        // 初始化页面
         document.addEventListener('DOMContentLoaded', function() {
-            // 所有链接提示
-            const links = [
-                {id: 'statAppLink', name: '统计小程序'},
-                {id: 'gameLink', name: '养成游戏'},
-                {id: 'appForumLink', name: '小程序论坛'},
-                {id: 'gameForumLink', name: '游戏论坛'}
-            ];
+            // 产品链接提示
+            const statAppLink = document.getElementById('statAppLink');
+            const gameLink = document.getElementById('gameLink');
             
-            links.forEach(linkInfo => {
-                const linkElement = document.getElementById(linkInfo.id);
-                if(linkElement) {
-                    linkElement.addEventListener('click', function(e) {
-                        if(this.getAttribute('href') === '#') {
-                            e.preventDefault();
-                            alert(`${linkInfo.name}链接尚未设置。请在HTML代码中为id为"${linkInfo.id}"的a标签添加href属性。`);
-                        }
-                    });
+            statAppLink.addEventListener('click', function(e) {
+                if(this.getAttribute('href') === '#') {
+                    e.preventDefault();
+                    alert('统计小程序链接尚未设置。请在HTML代码中为id为"statAppLink"的a标签添加href属性。');
+                }
+            });
+            
+            gameLink.addEventListener('click', function(e) {
+                if(this.getAttribute('href') === '#') {
+                    e.preventDefault();
+                    alert('养成游戏链接尚未设置。请在HTML代码中为id为"gameLink"的a标签添加href属性。');
                 }
             });
             
             // 平滑滚动
             document.querySelectorAll('nav a').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
+                    // 检查是否为外部链接
+                    if (this.getAttribute('href').startsWith('http') || this.getAttribute('target') === '_blank') {
+                        return; // 不阻止外部链接的默认行为
+                    }
+                    
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
                     if(targetId.startsWith('#')) {
@@ -687,8 +662,8 @@
             });
             
             // 添加卡片悬停效果增强
-            const cards = document.querySelectorAll('.product-card, .forum-card');
-            cards.forEach(card => {
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
                 card.addEventListener('mouseenter', function() {
                     this.style.transform = 'translateY(-10px) scale(1.02)';
                 });
@@ -713,6 +688,11 @@
                 });
             });
         });
+        
+        // 跳转到官网函数
+        function goToForum() {
+            window.open('https://yield-orbit.github.io/Yo-Forum/', '_blank');
+        }
     </script>
 </body>
 </html>
