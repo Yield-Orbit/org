@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yield Orbit - 数据统计与养成游戏</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏 */
+        header {
+            background-color: rgba(15, 23, 42, 0.95);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #334155;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 18px;
+        }
+        
+        nav a:hover {
+            color: #3b82f6;
+        }
+        
+        /* 主标题区域 */
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+            background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.15), transparent 50%),
+                        radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.15), transparent 50%);
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            color: #94a3b8;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        .highlight {
+            color: #60a5fa;
+            font-weight: 700;
+        }
+        
+        /* 主要区域样式 */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        /* 产品卡片 */
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+        
+        .product-card {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 16px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #334155;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.2);
+        }
+        
+        .product-icon {
+            font-size: 48px;
+            margin-bottom: 25px;
+            color: #3b82f6;
+        }
+        
+        .forum-icon {
+            color: #10b981;
+        }
+        
+        .product-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .product-card p {
+            color: #cbd5e1;
+            margin-bottom: 25px;
+        }
+        
+        .product-links {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .product-link {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .app-link {
+            background: linear-gradient(to right, #3b82f6, #2563eb);
+        }
+        
+        .game-link {
+            background: linear-gradient(to right, #8b5cf6, #7c3aed);
+        }
+        
+        .forum-link {
+            background: linear-gradient(to right, #10b981, #059669);
+        }
+        
+        .product-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .product-link i {
+            margin-right: 10px;
+        }
+        
+        /* 社区区域 */
+        .community-section {
+            margin-top: 60px;
+        }
+        
+        /* 链接设置区域 */
+        .link-configuration {
+            margin-top: 60px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid #334155;
+        }
+        
+        .link-configuration h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #60a5fa;
+            text-align: center;
+        }
+        
+        .link-config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .link-config-item {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+        
+        .app-config {
+            border-left-color: #3b82f6;
+        }
+        
+        .game-config {
+            border-left-color: #8b5cf6;
+        }
+        
+        .forum-config {
+            border-left-color: #10b981;
+        }
+        
+        .link-config-item h4 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .app-config h4 {
+            color: #3b82f6;
+        }
+        
+        .game-config h4 {
+            color: #8b5cf6;
+        }
+        
+        .forum-config h4 {
+            color: #10b981;
+        }
+        
+        .link-placeholder {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px dashed #64748b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        /* 特点区域 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .feature {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .feature h3 {
+            color: #60a5fa;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: rgba(15, 23, 42, 0.98);
+            padding: 60px 0 30px;
+            border-top: 1px solid #334155;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #60a5fa;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .product-card {
+                padding: 30px 20px;
+            }
+            
+            .link-config-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container nav-container">
+            <a href="#home" class="logo">
+                <div class="logo-img">YO</div>
+                <span class="logo-text">Yield Orbit</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#products">产品</a></li>
+                    <li><a href="#community">社区</a></li>
+                    <li><a href="https://yield-orbit.github.io/forum/" target="_blank">进入论坛</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主标题区域 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>探索数据宇宙，<span class="highlight">成就游戏人生</span></h1>
+            <p>Yield Orbit 为您提供专业的统计类小程序和沉浸式养成游戏体验，以及活跃的社区论坛，将数据分析、娱乐与交流完美结合。</p>
+        </div>
+    </section>
+
+    <!-- 产品展示区域 -->
+    <section id="products">
+        <div class="container">
+            <h2 class="section-title">我们的产品</h2>
+            
+            <div class="products">
+                <!-- 统计小程序卡片 -->
+                <div class="product-card">
+                    <i class="fas fa-chart-line product-icon"></i>
+                    <h3>统计类小程序</h3>
+                    <p>Yield Orbit 统计助手提供强大的数据分析功能，帮助您轻松处理复杂数据，生成可视化报告，洞察数据背后的价值。</p>
+                    <p>支持实时数据更新、多维度分析和自定义报表，适用于商业分析、学术研究和个人数据管理。</p>
+                    
+                    <div class="product-links">
+                        <a href="#" class="product-link app-link" id="statAppLink">
+                            <i class="fas fa-external-link-alt"></i> 进入统计小程序
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 养成游戏卡片 -->
+                <div class="product-card">
+                    <i class="fas fa-gamepad product-icon"></i>
+                    <h3>养成类游戏</h3>
+                    <p>体验我们精心设计的养成游戏，在虚拟世界中培养角色、建立帝国或探索未知宇宙。丰富的剧情和个性化发展路径等待您的探索。</p>
+                    <p>游戏特色：深度角色成长系统、多样化结局、社交互动功能和定期内容更新。</p>
+                    
+                    <div class="product-links">
+                        <a href="#" class="product-link game-link" id="gameLink">
+                            <i class="fas fa-rocket"></i> 进入养成游戏
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 社区论坛区域 -->
+    <section id="community" class="community-section">
+        <div class="container">
+            <h2 class="section-title">社区论坛</h2>
+            
+            <div class="products">
+                <!-- 论坛社区卡片 -->
+                <div class="product-card">
+                    <i class="fas fa-comments product-icon forum-icon"></i>
+                    <h3>Yield Orbit 社区论坛</h3>
+                    <p>加入我们的官方论坛，与其他用户交流使用心得，分享游戏攻略，获取技术支持。</p>
+                    <p><strong>论坛特点：</strong></p>
+                    <ul style="list-style-position: inside; margin-bottom: 20px; color: #cbd5e1;">
+                        <li>用户注册登录系统</li>
+                        <li>敏感词过滤机制</li>
+                        <li>小程序和游戏分版块讨论</li>
+                        <li>开发者管理功能</li>
+                        <li>用户协议保护</li>
+                    </ul>
+                    
+                    <div class="product-links">
+                        <a href="https://yield-orbit.github.io/forum/" target="_blank" class="product-link forum-link">
+                            <i class="fas fa-external-link-alt"></i> 进入社区论坛
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 论坛特色卡片 -->
+                <div class="product-card">
+                    <i class="fas fa-users product-icon" style="color: #8b5cf6;"></i>
+                    <h3>社区特色功能</h3>
+                    <p><strong>用户友好：</strong> 简洁的注册流程，完善的用户协议保护</p>
+                    <p><strong>安全交流：</strong> 敏感词自动过滤，维护健康社区环境</p>
+                    <p><strong>双论坛系统：</strong> 小程序技术论坛和游戏玩家社区分开</p>
+                    <p><strong>开发者管理：</strong> 用户"yao"拥有开发者特权，可管理用户</p>
+                    <p><strong>实时互动：</strong> 点赞、回复、消息发布功能</p>
+                    
+                    <div class="product-links">
+                        <a href="https://yield-orbit.github.io/forum/" target="_blank" class="product-link" style="background: linear-gradient(to right, #8b5cf6, #7c3aed);">
+                            <i class="fas fa-comments"></i> 立即加入讨论
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 链接设置区域 -->
+    <section id="links">
+        <div class="container">
+            <h2 class="section-title">链接设置</h2>
+            <div class="link-configuration">
+                <h3>产品链接配置</h3>
+                <p style="text-align: center; color: #94a3b8; margin-bottom: 20px;">以下是产品链接设置区域，请将您的实际链接填入对应的位置</p>
+                
+                <div class="link-config-grid">
+                    <div class="link-config-item app-config">
+                        <h4>统计小程序链接</h4>
+                        <p>要设置统计小程序的链接，请找到id为"statAppLink"的a标签，在href属性中填入您的小程序链接地址。</p>
+                        <div class="link-placeholder">
+                            <p><strong>代码位置：</strong></p>
+                            <p>&lt;a href="#" class="product-link app-link" id="statAppLink"&gt;</p>
+                            <p><strong>替换为：</strong></p>
+                            <p>&lt;a href="https://your-stat-app-link.com" class="product-link app-link" id="statAppLink"&gt;</p>
+                        </div>
+                    </div>
+                    
+                    <div class="link-config-item game-config">
+                        <h4>养成游戏链接</h4>
+                        <p>要设置养成游戏的链接，请找到id为"gameLink"的a标签，在href属性中填入您的游戏链接地址。</p>
+                        <div class="link-placeholder">
+                            <p><strong>代码位置：</strong></p>
+                            <p>&lt;a href="#" class="product-link game-link" id="gameLink"&gt;</p>
+                            <p><strong>替换为：</strong></p>
+                            <p>&lt;a href="https://your-game-link.com" class="product-link game-link" id="gameLink"&gt;</p>
+                        </div>
+                    </div>
+                    
+                    <div class="link-config-item forum-config">
+                        <h4>论坛链接（已设置）</h4>
+                        <p>论坛链接已设置为：<code>https://yield-orbit.github.io/forum/</code></p>
+                        <p>如需修改，请找到以下代码部分：</p>
+                        <div class="link-placeholder">
+                            <p><strong>导航栏链接：</strong></p>
+                            <p>&lt;a href="https://yield-orbit.github.io/forum/" target="_blank"&gt;进入论坛&lt;/a&gt;</p>
+                            
+                            <p><strong>社区区域链接：</strong></p>
+                            <p>&lt;a href="https://yield-orbit.github.io/forum/" target="_blank" class="product-link forum-link"&gt;</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特点区域 -->
+    <section id="features">
+        <div class="container">
+            <h2 class="section-title">为什么选择Yield Orbit</h2>
+            <div class="features">
+                <div class="feature">
+                    <h3><i class="fas fa-bolt"></i> 极速性能</h3>
+                    <p>我们的产品经过深度优化，提供流畅的用户体验，无论是数据处理、游戏运行还是论坛交流都快速响应。</p>
+                </div>
+                <div class="feature">
+                    <h3><i class="fas fa-shield-alt"></i> 安全可靠</h3>
+                    <p>采用最新的安全技术，确保用户数据安全和隐私保护，让您安心使用我们的服务和参与社区讨论。</p>
+                </div>
+                <div class="feature">
+                    <h3><i class="fas fa-sync-alt"></i> 持续更新</h3>
+                    <p>我们定期推出新功能和内容更新，根据用户反馈不断优化产品，提供更好的体验。</p>
+                </div>
+                <div class="feature">
+                    <h3><i class="fas fa-users"></i> 活跃社区</h3>
+                    <p>加入我们活跃的用户社区，分享技巧、交流经验，共同探索数据与游戏的无限可能。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于Yield Orbit</h3>
+                    <p>我们是一家专注于数据统计工具、娱乐游戏开发和社区建设的公司，致力于提供全方位的数字体验。</p>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: #94a3b8;">
+                        <i class="fas fa-calendar-alt"></i> 成立于2026年1月30日
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h3>产品与服务</h3>
+                    <ul style="list-style: none;">
+                        <li>统计类小程序</li>
+                        <li>养成类游戏</li>
+                        <li>社区论坛</li>
+                        <li>技术支持</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="#home" style="color: #94a3b8; text-decoration: none;">首页</a></li>
+                        <li><a href="#products" style="color: #94a3b8; text-decoration: none;">产品</a></li>
+                        <li><a href="#community" style="color: #94a3b8; text-decoration: none;">社区</a></li>
+                        <li><a href="https://yield-orbit.github.io/forum/" target="_blank" style="color: #94a3b8; text-decoration: none;">进入论坛</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>联系我们</h3>
+                    <p><i class="fas fa-envelope"></i> 2663184206@qq.com</p>
+                    <p><i class="fas fa-globe"></i> https://yield-orbit.github.io/</p>
+                    <p><i class="fas fa-github"></i> yield-orbit</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Yield Orbit. 保留所有权利。</p>
+                <p style="margin-top: 10px; font-size: 0.9rem;">
+                    官网版本 2.0 | 
+                    <a href="https://yield-orbit.github.io/forum/" target="_blank" style="color: #60a5fa; text-decoration: none;">社区论坛</a> | 
+                    <a href="#contact" style="color: #60a5fa; text-decoration: none;">联系我们</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 产品链接提示
+            const statAppLink = document.getElementById('statAppLink');
+            const gameLink = document.getElementById('gameLink');
+            
+            statAppLink.addEventListener('click', function(e) {
+                if(this.getAttribute('href') === '#') {
+                    e.preventDefault();
+                    alert('统计小程序链接尚未设置。请在HTML代码中为id为"statAppLink"的a标签添加href属性。');
+                }
+            });
+            
+            gameLink.addEventListener('click', function(e) {
+                if(this.getAttribute('href') === '#') {
+                    e.preventDefault();
+                    alert('养成游戏链接尚未设置。请在HTML代码中为id为"gameLink"的a标签添加href属性。');
+                }
+            });
+            
+            // 平滑滚动
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    // 检查是否为外部链接
+                    if (this.getAttribute('href').startsWith('http') || this.getAttribute('target') === '_blank') {
+                        return; // 不阻止外部链接的默认行为
+                    }
+                    
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if(targetId.startsWith('#')) {
+                        const targetElement = document.querySelector(targetId);
+                        if(targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            // 添加卡片悬停效果增强
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // 链接配置区域高亮
+            const linkConfigItems = document.querySelectorAll('.link-config-item');
+            linkConfigItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    const color = this.classList.contains('app-config') ? 'rgba(59, 130, 246, 0.3)' : 
+                                  this.classList.contains('game-config') ? 'rgba(139, 92, 246, 0.3)' : 
+                                  'rgba(16, 185, 129, 0.3)';
+                    this.style.boxShadow = `0 10px 25px ${color}`;
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
